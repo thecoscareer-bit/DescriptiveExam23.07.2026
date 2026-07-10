@@ -385,19 +385,6 @@ function startExam() {
   loadQuestion();
 }
 
-  //QUESTIONS = studentRole === "assistant"
-    //? QUESTIONS_ASSISTANT_SECRETARY
-    //: QUESTIONS_JUNIOR_EXECUTIVE;
-
-  resetState();
-
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("exam").classList.remove("hidden");
-
-  document.documentElement.requestFullscreen?.();
-  loadQuestion();
-}
-
 /* RESET */
 function resetState() {
   answers = [];
