@@ -45,6 +45,11 @@
          class="w-full border p-2 mb-3 rounded"
          placeholder="Enter Email Address">
 
+  <select id="studentRole" class="w-full border p-2 mb-4 rounded">
+    <option value="">Select Role</option>
+    <option value="junior">Junior Executive</option>
+  </select>
+
   <button onclick="startExam()"
           class="w-full bg-blue-600 text-white py-2 rounded">
     Start Exam
@@ -364,17 +369,39 @@ let examFinished = false;
 function startExam() {
   studentName = document.getElementById("studentName").value.trim();
   studentEmail = document.getElementById("studentEmail").value.trim();
+  studentRole = document.getElementById("studentRole").value;
 
-  if (!studentName || !studentEmail) {
-    alert("Please enter Name and Email");
+  if (!studentName || !studentEmail || !studentRole) {
+    alert("Please enter Name, Email and select Role");
     return;
   }
 
-  // Fixed role
-  studentRole = "junior";
+  //QUESTIONS = studentRole === "assistant"
+    //? QUESTIONS_ASSISTANT_SECRETARY
+    //: QUESTIONS_JUNIOR_EXECUTIVE;
+	
+	switch (studentRole) {
+  case "assistant":
+    QUESTIONS = QUESTIONS_ASSISTANT_SECRETARY;
+    break;
 
-  // Fixed question bank
-  QUESTIONS = QUESTIONS_JUNIOR_EXECUTIVE;
+  case "junior":
+    QUESTIONS = QUESTIONS_JUNIOR_EXECUTIVE;
+    break;
+
+  case "senior":
+    QUESTIONS = QUESTIONS_SENIOR_EXECUTIVE;
+    break;
+
+  case "ldc":
+    QUESTIONS = QUESTIONS_LOWER_DEVISION_CLERK;
+    break;
+
+  default:
+    alert("Invalid role selected");
+    return;
+}
+
 
   resetState();
 
@@ -515,4 +542,3 @@ function exitFullscreen() {
 
 </body>
 </html>
-
