@@ -365,8 +365,36 @@ let answers = [], index = 0;
 let questionTimer, answerTimer, answerTimeLeft;
 let examFinished = false;
 
+/* ================= EXAM WINDOW ================= */
+const EXAM_START_HOUR = 22;
+const EXAM_START_MIN = 0;
+const EXAM_END_HOUR = 23;
+const EXAM_END_MIN = 30;
+
+function isExamTime() {
+  const now = new Date();
+  const start = new Date(now);
+  start.setHours(EXAM_START_HOUR, EXAM_START_MIN, 0, 0);
+  const end = new Date(now);
+  end.setHours(EXAM_END_HOUR, EXAM_END_MIN, 0, 0);
+  return now >= start && now <= end;
+}
+
+function getExamEndTime() {
+  const end = new Date();
+  end.setHours(EXAM_END_HOUR, EXAM_END_MIN, 0, 0);
+  return end;
+}
+
+
 /* START */
 function startExam() {
+  if (!isExamTime()) {
+    alert("The exam is available only from 10:00 PM to 11:30 PM.");
+    return;
+  }
+
+
   studentName = document.getElementById("studentName").value.trim();
   studentEmail = document.getElementById("studentEmail").value.trim();
   studentRole = document.getElementById("studentRole").value;
@@ -410,6 +438,18 @@ function startExam() {
 
   document.documentElement.requestFullscreen?.();
   loadQuestion();
+
+  const examEnd = getExamEndTime();
+  const remainingTime = examEnd.getTime() - Date.now();
+  if (remainingTime > 0) {
+    setTimeout(() => {
+      if (!examFinished) {
+        alert('Exam time is over. Your answers will be submitted automatically.');
+        normalFinish();
+      }
+    }, remainingTime);
+  }
+
 }
 
 /* RESET */
@@ -541,4 +581,4 @@ function exitFullscreen() {
 </script>
 
 </body>
-</html>
+</html> 	 	
